@@ -5,13 +5,14 @@
  *  angles are in radian.
  *  distance are in meters.
  */
+ 
 Matrix4f DH2HT(float a, float alpha, float d, float theta)
 {
 	Matrix4f HT;
 	//you will need to write the HT matrix given a, alpha, d and theta
-	HT<<1,0,0,0,
-		0,1,0,0,
-		0,0,1,0,
+	HT<<cos(theta),-sin(theta)*cos(alpha),sin(theta)*sin(alpha),a*cos(theta),
+		sin(theta),cos(theta)*cos(alpha),-cos(theta)*sin(alpha),a*sin(theta),
+		0,sin(alpha),cos(alpha),d,
 		0,0,0,1;
 	//print out a, alpha, d, theta and HT matrix.
 	#ifdef DEBUG
@@ -34,12 +35,12 @@ std::vector<double> lab_fk(float theta1, float theta2, float theta3, float theta
 	cout<<"Forward Kinematics calculated :"<<endl;
 
 // Uncomment these when you have enter the correct value in each Question mark.
-//	cout<<	DH2HT(?,?,?,?)*
-//			DH2HT(?,?,?,?)*
-//			DH2HT(?,?,?,?)*
-//			DH2HT(?,?,?,?)*
-//			DH2HT(?,?,?,?)*
-//			DH2HT(?,?,?,?)<<endl;
+	cout<<	DH2HT(0,-PI/2,152,theta1)*
+			DH2HT(244,0,120,theta2)*
+			DH2HT(213,0,-93,theta3)*
+			DH2HT(0,-PI/2,83,theta4)*
+			DH2HT(0,PI/2,83,theta5)*
+			DH2HT(53.5,PI,82+56,theta6)<<endl;
 	
 	return_value[0]=theta1+PI;  // What the lab considers zero for Theta1 is 180 on the UR3 robot.
 	return_value[1]=theta2;
